@@ -1,13 +1,4 @@
 
-
-function oneIndentEscape(str, strToDel)
-	local s, e = string.find(str, strToDel)
-
-	--return string.sub(str, string.find(str, strDtDel))
-
-	return string.sub(str, 0, s-1) .. string.sub(str, e+1)
-end
-
 function serialize (o, indentation)
   if type(o, indentation) == "number" then
 	io.write(o)
@@ -25,17 +16,12 @@ function serialize (o, indentation)
 	  serialize(v, indentation .. indentPlus, i)
 	  io.write(",\n")
 	end
-	--to do indentaiton - "  "
-	--[[
-	通过找出"  "，然后在从indentation里面删除这个串
-	]]--
-	indentation = oneIndentEscape(indentation, "  ")
-	io.write(indentation, "}") -- to be continue 这里要看api怎么操作字符串减去多余的空格
-									--用这个方法print(string.gsub(str, "dd", "--"))
+
+	indentation = string.gsub(indentation, "  ", "", 1)
+	io.write(indentation, "}")
   else
 	error("cannot serialize a " .. type(o))
   end
-
 end
 
 
